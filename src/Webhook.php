@@ -21,10 +21,15 @@ class Webhook
     public const CIRCUIT_STATE_OPEN = 'open';
     public const CIRCUIT_STATE_HALF_OPEN = 'half_open';
 
+    public const MODE_ALL = 'all';
+    public const MODE_TEST = 'test';
+    public const MODE_LIVE = 'live';
+
     public readonly string $id;
     public readonly string $url;
     /** @var array<string> */
     public readonly array $events;
+    public readonly string $mode;
     public readonly bool $isActive;
     public readonly int $failureCount;
     public readonly string $circuitState;
@@ -46,6 +51,7 @@ class Webhook
         $this->id = $data['id'] ?? '';
         $this->url = $data['url'] ?? '';
         $this->events = $data['events'] ?? [];
+        $this->mode = $data['mode'] ?? self::MODE_ALL;
         $this->isActive = (bool) ($data['is_active'] ?? $data['isActive'] ?? true);
         $this->failureCount = (int) ($data['failure_count'] ?? $data['failureCount'] ?? 0);
         $this->circuitState = $data['circuit_state'] ?? $data['circuitState'] ?? self::CIRCUIT_STATE_CLOSED;
@@ -85,6 +91,7 @@ class Webhook
             'id' => $this->id,
             'url' => $this->url,
             'events' => $this->events,
+            'mode' => $this->mode,
             'is_active' => $this->isActive,
             'failure_count' => $this->failureCount,
             'circuit_state' => $this->circuitState,

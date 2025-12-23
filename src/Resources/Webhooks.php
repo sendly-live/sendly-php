@@ -29,7 +29,7 @@ class Webhooks
      *
      * @param string $url The URL to receive webhook events
      * @param array<string> $events List of event types to subscribe to
-     * @param array{apiVersion?: string} $options Additional options
+     * @param array{apiVersion?: string, mode?: string, description?: string, metadata?: array} $options Additional options
      * @return WebhookCreatedResponse The created webhook with secret
      * @throws ValidationException If parameters are invalid
      */
@@ -50,6 +50,15 @@ class Webhooks
 
         if (isset($options['apiVersion'])) {
             $payload['apiVersion'] = $options['apiVersion'];
+        }
+        if (isset($options['mode'])) {
+            $payload['mode'] = $options['mode'];
+        }
+        if (isset($options['description'])) {
+            $payload['description'] = $options['description'];
+        }
+        if (isset($options['metadata'])) {
+            $payload['metadata'] = $options['metadata'];
         }
 
         $response = $this->client->post('/webhooks', $payload);
@@ -95,7 +104,7 @@ class Webhooks
      * Update a webhook
      *
      * @param string $id Webhook ID
-     * @param array{url?: string, events?: array<string>, isActive?: bool} $updates Updates to apply
+     * @param array{url?: string, events?: array<string>, isActive?: bool, mode?: string, description?: string, metadata?: array} $updates Updates to apply
      * @return Webhook The updated webhook
      * @throws ValidationException If ID is empty
      */
@@ -115,6 +124,15 @@ class Webhooks
         }
         if (isset($updates['isActive'])) {
             $payload['is_active'] = $updates['isActive'];
+        }
+        if (isset($updates['mode'])) {
+            $payload['mode'] = $updates['mode'];
+        }
+        if (isset($updates['description'])) {
+            $payload['description'] = $updates['description'];
+        }
+        if (isset($updates['metadata'])) {
+            $payload['metadata'] = $updates['metadata'];
         }
 
         $response = $this->client->patch("/webhooks/{$id}", $payload);
