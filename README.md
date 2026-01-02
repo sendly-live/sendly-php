@@ -60,7 +60,7 @@ Before sending live SMS messages, you need:
 
 ```php
 $client = new Sendly('sk_live_v1_xxx', [
-    'baseUrl' => 'https://api.sendly.live/v1',
+    'baseUrl' => 'https://sendly.live/api/v1',
     'timeout' => 60,
     'maxRetries' => 5,
 ]);
