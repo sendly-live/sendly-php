@@ -35,7 +35,18 @@ class Verify
     public function send(string $phone, array $options = []): array
     {
         $body = array_merge(['phone' => $phone], $options);
-        return $this->client->post('/verify/send', $body);
+        return $this->client->post('/verify', $body);
+    }
+
+    /**
+     * Resend a verification code
+     *
+     * @param string $id Verification ID
+     * @return array{verification: array<string, mixed>, code?: string}
+     */
+    public function resend(string $id): array
+    {
+        return $this->client->post("/verify/{$id}/resend");
     }
 
     /**
